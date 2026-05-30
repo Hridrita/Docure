@@ -29,7 +29,7 @@ export const HowItWorks = () => {
           {HOW_IT_WORKS.map((step, i) => (
             <div
               key={i}
-              className={`p-8 rounded-3xl bg-white border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${inView ? `animate__animated animate__fadeInUp ${ANIMATE_DELAYS[i]}` : 'opacity-0'}`}
+              className={`p-8 rounded-3xl bg-[#DDE6D8] border border-gray-100 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 ${inView ? `animate__animated animate__fadeInUp ${ANIMATE_DELAYS[i]}` : 'opacity-0'}`}
             >
               <div className="w-14 h-14 rounded-full flex items-center justify-center font-bold mb-6 text-xl bg-[#4A6B6F] text-white shadow-lg">
                 {step.num}
