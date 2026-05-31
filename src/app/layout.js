@@ -2,6 +2,7 @@ import { Geist, Geist_Mono, Inter, Outfit, Plus_Jakarta_Sans } from "next/font/g
 import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
+import { Toaster } from "sonner";
 
 
 
@@ -35,6 +36,7 @@ export default function RootLayout({ children }) {
         <Navbar></Navbar>
         {children}
         <Footer></Footer>
+        <Toaster />
         </body>
     </html>
   );

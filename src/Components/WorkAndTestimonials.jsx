@@ -23,7 +23,8 @@ export const HowItWorks = () => {
     <section ref={ref} className="py-24 px-6 bg-slate-50">
       <div className="max-w-5xl mx-auto">
         <h2 className={`text-4xl font-bold mb-16 text-center text-[#4A6B6F] ${inView ? 'animate__animated animate__fadeInDown' : 'opacity-0'}`}>
-          Book an appointment in 3 steps
+          <span className="italic text-[#4A6B6F] font-serif ml-3">Book Appointments in 3 Steps
+  </span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {HOW_IT_WORKS.map((step, i) => (
@@ -52,7 +53,8 @@ export const Testimonials = () => {
     <section ref={ref} className="py-24 px-6 bg-white">
       <div className="max-w-5xl mx-auto">
         <h2 className={`text-4xl font-bold mb-16 text-center text-[#4A6B6F] ${inView ? 'animate__animated animate__fadeInDown' : 'opacity-0'}`}>
-          What our patients say
+          <span className="italic text-[#4A6B6F] font-serif ml-3">What Our Patients Say
+  </span>
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {TESTIMONIALS.map((t, i) => (
