@@ -1,175 +1,240 @@
-'use client'
-import {
-  FieldError,
-  Input,
-  Select,
-  TextField,
-  Label,
-  ListBox,
-  TextArea,
-  Button,
-  Card,
-} from "@heroui/react";
+"use client";
+import { Input, TextField, Label, TextArea, Button, Card } from "@heroui/react";
+import { useState } from "react";
 
 const AddDoctorPage = () => {
-    const handleSubmit = async(e) =>{
-        e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-        const doctor = Object.fromEntries(formData.entries());
-        // console.log(doctor);
+  const [errors, setErrors] = useState({});
+  const [form, setForm] = useState({
+    doctorName: "",
+    specialty: "",
+    experience: "",
+    imageUrl: "",
+    availability: "",
+    fee: "",
+    hospital: "",
+    location: "",
+    description: "",
+  });
 
-        
+  const handleChange = (field) => (e) => {
+    setForm((prev) => ({ ...prev, [field]: e.target.value }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: "" }));
+  };
 
-        try{
-            const res = await fetch('http://localhost:5000/doctors', {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(doctor)
-        })
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("submit fired", form);
 
-        const data = await res.json()
-        console.log(data);
-        } catch(error) {
-            console.log(error);
-        }
+    let newErrors = {};
+    if (!form.doctorName || form.doctorName.length < 3)
+      newErrors.doctorName =
+        "Please enter a correct name (at least 3 characters)";
+    if (!form.fee || parseInt(form.fee) < 0 || isNaN(parseInt(form.fee)))
+      newErrors.fee = "Doctor's fee should be a positive number";
+    if (!form.imageUrl || !form.imageUrl.startsWith("http"))
+      newErrors.imageUrl =
+        "Please enter a correct image URL starting with http";
+    if (!form.experience)
+      newErrors.experience = "Please enter doctor's experience";
+    if (!form.availability)
+      newErrors.availability = "Please enter correct time slot";
+    if (!form.specialty)
+      newErrors.specialty = "Please enter doctor's specialization";
+    if (!form.hospital || form.hospital.length < 3)
+      newErrors.hospital = "Please enter hospital name (at least 3 characters)";
+    if (!form.location) newErrors.location = "Please enter correct location";
+    if (!form.description || form.description.length < 10)
+      newErrors.description =
+        "Please enter a short description (at least 10 characters)";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
     }
-  return (
-    <div className="bg-slate-50">
-      <div className="p-5 max-w-4xl mx-auto">
-        <div className="mb-8 text-center">
-          <h1 className="text-4xl font-extrabold text-gray-800">
-            Add New Doctor
-          </h1>
-          <p className="text-gray-500 mt-2">
-            Fill in the details to create a new doctor description
-          </p>
-        </div>
 
-        <Card className="p-2 shadow-2xl border-0 bg-white/80 backdrop-blur-sm rounded-3xl">
-          <form onSubmit={handleSubmit} className="p-8 space-y-6 bg-[#DDE6D8]">
+    try {
+      const res = await fetch("http://localhost:5000/doctors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-50 py-10 px-4">
+      <div className="max-w-3xl mx-auto">
+        <Card className="p-2 shadow-xl border border-gray-100 bg-white rounded-3xl">
+          <form onSubmit={handleSubmit} className="p-8 space-y-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="md:col-span-2">
-                <TextField name="doctorName" isRequired>
-                  <Label className="font-semibold text-[#4A6B6F]">
+                <TextField
+                  className="w-full md:col-span-2"
+                  isInvalid={!!errors.doctorName}
+                  errorMessage={errors.doctorName}
+                >
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
                     Doctor Name
                   </Label>
                   <Input
-                    placeholder="enter doctor name"
-                    className="rounded-xl border-gray-200 mt-1"
+                    value={form.doctorName}
+                    onChange={handleChange("doctorName")}
+                    placeholder="Dr. John Doe"
                   />
                 </TextField>
+                {errors.doctorName && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.doctorName}
+                  </p>
+                )}
               </div>
 
-              <TextField name="specialty" isRequired>
-                <Label className="font-semibold text-[#4A6B6F]">Specialty</Label>
-                <Input
-                  placeholder="e.g. Cardiologist"
-                  className="rounded-xl border-gray-200 mt-1"
-                />
-              </TextField>
+              <div>
+                <TextField isInvalid={!!errors.specialty}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
+                    Specialty
+                  </Label>
+                  <Input
+                    value={form.specialty}
+                    onChange={handleChange("specialty")}
+                    placeholder="e.g. Cardiologist"
+                  />
+                </TextField>
+                {errors.specialty && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.specialty}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <TextField isInvalid={!!errors.experience}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
+                    Experience
+                  </Label>
+                  <Input
+                    value={form.experience}
+                    onChange={handleChange("experience")}
+                    placeholder="e.g. 10 years"
+                  />
+                </TextField>
+                {errors.experience && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.experience}
+                  </p>
+                )}
+              </div>
 
               <div className="md:col-span-2">
-                <TextField name="imageUrl" isRequired>
-                  <Label className="font-semibold text-[#4A6B6F]">
+                <TextField isInvalid={!!errors.imageUrl}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
                     Image URL
                   </Label>
                   <Input
-                    type="url"
-                    placeholder="https://..."
-                    className="rounded-xl border-gray-200 mt-1"
+                    value={form.imageUrl}
+                    onChange={handleChange("imageUrl")}
+                    placeholder="https://image-link.com"
                   />
                 </TextField>
+                {errors.imageUrl && (
+                  <p className="text-red-500 text-xs mt-1">{errors.imageUrl}</p>
+                )}
               </div>
-
-              
-
-              <TextField name="experience" isRequired>
-                <Label className="font-semibold text-[#4A6B6F]">
-                  Experience
-                </Label>
-                <Input
-                  
-                  placeholder="e.g. 10 years"
-                  className="rounded-xl border-gray-200 mt-1"
-                />
-              </TextField>
 
               <div>
-                <Label className="font-semibold text-[#4A6B6F]">Availability</Label>
-                <Select name="availability" isRequired className="w-full mt-1">
-                  <Select.Trigger className="rounded-xl border-gray-200">
-                    <Select.Value placeholder="Select a time" />
-                  </Select.Trigger>
-                  <Select.Popover>
-                    <ListBox>
-                      {[
-                        "09:00 AM - 12:00 PM",
-                        "10:00 AM - 01:00 PM",
-                        "08:00 AM - 02:00 PM",
-                        "02:00 AM - 07:00 PM",
-                        "11:00 AM - 03:00 PM",
-                        "07:00 AM - 11:00 PM",
-                      ].map((item) => (
-                        <ListBox.Item key={item} id={item}>
-                          {item}
-                        </ListBox.Item>
-                      ))}
-                    </ListBox>
-                  </Select.Popover>
-                </Select>
-              </div>
-
-              <TextField name="hospital" isRequired>
-                <Label className="font-semibold text-[#4A6B6F]">Hospital</Label>
-                <Input
-                  placeholder="e.g. Labaid Cardiac Hospital"
-                  className="rounded-xl border-gray-200 mt-1"
-                />
-              </TextField>
-
-              <div className="md:col-span-2">
-                <TextField name="location" type="text" isRequired>
-                  <Label className="font-semibold text-[#4A6B6F]">
-                    Loaction
+                <TextField isInvalid={!!errors.availability}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
+                    Availability (Time Slots)
                   </Label>
-                  <Input
-                    placeholder="e.g. Dhanmondi"
-                    className="rounded-xl border-gray-200 mt-1"
+                  <TextArea
+                    value={form.availability}
+                    onChange={handleChange("availability")}
+                    placeholder="e.g. 09:00 AM - 12:00 PM"
                   />
                 </TextField>
+                {errors.availability && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.availability}
+                  </p>
+                )}
               </div>
 
-              <TextField name="fee" isRequired>
-                <Label className="font-semibold text-[#4A6B6F]">Fee</Label>
-                <Input
-                  placeholder="e.g. 500"
-                  className="rounded-xl border-gray-200 mt-1"
-                />
-              </TextField>
+              <div>
+                <TextField isInvalid={!!errors.fee}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
+                    Fee (BDT)
+                  </Label>
+                  <Input
+                    value={form.fee}
+                    onChange={handleChange("fee")}
+                    placeholder="e.g. 500"
+                  />
+                </TextField>
+                {errors.fee && (
+                  <p className="text-red-500 text-xs mt-1">{errors.fee}</p>
+                )}
+              </div>
 
-              
+              <div>
+                <TextField isInvalid={!!errors.hospital}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
+                    Hospital Name
+                  </Label>
+                  <Input
+                    value={form.hospital}
+                    onChange={handleChange("hospital")}
+                    placeholder="e.g. City Hospital"
+                  />
+                </TextField>
+                {errors.hospital && (
+                  <p className="text-red-500 text-xs mt-1">{errors.hospital}</p>
+                )}
+              </div>
+              <div>
+                <TextField isInvalid={!!errors.location}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
+                    Location
+                  </Label>
+                  <Input
+                    value={form.location}
+                    onChange={handleChange("location")}
+                    placeholder="e.g. Dhanmondi, Dhaka"
+                  />
+                </TextField>
+                {errors.location && (
+                  <p className="text-red-500 text-xs mt-1">{errors.location}</p>
+                )}
+              </div>
 
               <div className="md:col-span-2">
-                <TextField name="description" isRequired>
-                  <Label className="font-semibold text-[#4A6B6F]">
+                <TextField isInvalid={!!errors.description}>
+                  <Label className="font-bold text-[#4A6B6F] mb-2 block">
                     Description
                   </Label>
                   <TextArea
-                    placeholder="Describe about the doctor"
-                    className="rounded-xl border-gray-200 mt-1 min-h-[120px]"
+                    value={form.description}
+                    onChange={handleChange("description")}
+                    placeholder="Tell us about the doctor's expertise..."
                   />
                 </TextField>
+                {errors.description && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.description}
+                  </p>
+                )}
               </div>
             </div>
 
-            <Button
+            <button
               type="submit"
-              className="w-full bg-[#4A6B7F] hover:bg-[#4A6B6F] text-xl text-[#DDE6D8] hover:text-white font-bold  py-6 rounded-2xl transition-all shadow-lg shadow-[#4A6B6F]"
+              className="w-full bg-[#4A6B6F] text-white font-bold py-4 rounded-xl hover:opacity-90 transition"
             >
-              Add Doctor
-            </Button>
+              Add Doctor Profile
+            </button>
           </form>
         </Card>
       </div>
