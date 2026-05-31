@@ -2,6 +2,9 @@
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { AiOutlineLogin } from "react-icons/ai";
+import { RiLoginBoxLine } from "react-icons/ri";
+import { GiArchiveRegister } from "react-icons/gi";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -101,14 +104,14 @@ const Navbar = () => {
           href={"/"}
           className="btn btn-sm lg:btn-md bg-[#DDE6D8] text-[#4A6B6F] hover:bg-white border-none"
         >
-          Login
+          <span className="flex items-center gap-3">Login <RiLoginBoxLine className="bg-[#4A6B6F] rounded-full p-2 text-[#DDE6D8] h-8 w-8" /></span>
         </Link>
 
         <Link
           href={"/"}
           className="btn btn-sm lg:btn-md bg-[#DDE6D8] text-[#4A6B6F] hover:bg-white border-none"
         >
-          Register
+          <span className="flex items-center gap-3">Register <GiArchiveRegister  className="bg-[#4A6B6F] rounded-full p-2 text-[#DDE6D8] h-8 w-8" /></span>
         </Link>
       </div>
     </div>

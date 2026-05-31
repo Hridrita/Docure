@@ -3,6 +3,7 @@ import { Spinner } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { toast } from "sonner";
 
 const AllAppointmentsPage = () => {
@@ -31,17 +32,21 @@ const AllAppointmentsPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (loading) return <div className="flex flex-col items-center gap-2">
+  if (loading)
+    return (
+      <div className="flex flex-col items-center gap-2">
         <Spinner color="success" />
         <span className="text-xs text-muted">Loading...</span>
-      </div>;
+      </div>
+    );
 
   return (
     <div className="bg-[#DDE6D8] min-h-screen py-10 px-4">
       <div className="text-center mb-16 mt-5">
         <h1 className="text-3xl md:text-4xl font-extrabold text-[#4A6B6F] mb-4">
-           <span className="italic text-[#4A6B6F] font-serif ml-3">Meet Professional Doctors & Specialists
-  </span>
+          <span className="italic text-[#4A6B6F] font-serif ml-3">
+            Meet Professional Doctors & Specialists
+          </span>
         </h1>
         <p className="text-medium text-gray-600 max-w-2xl mx-auto px-2">
           Connect with top-tier medical specialists through our verified
@@ -79,9 +84,12 @@ const AllAppointmentsPage = () => {
 
               <div className="card-actions justify-center mt-2">
                 <Link href={`/appointments/${doc._id}`}>
-                <button className="w-full bg-[#4A6B6F] text-white px-3 py-2 rounded-lg font-medium hover:bg-[#3d595d] transition-colors">
-                  View Profile
-                </button>
+                  <button className="w-full bg-[#4A6B6F] text-white px-3 py-2 rounded-lg font-medium hover:bg-[#3d595d] transition-colors ">
+                    <span className="flex items-center gap-4">
+                      View Profile
+                      <FaArrowRightLong className="bg-[#DDE6D8] rounded-full p-2 text-[#4A6B6F] h-8 w-8" />
+                    </span>
+                  </button>
                 </Link>
               </div>
             </div>
