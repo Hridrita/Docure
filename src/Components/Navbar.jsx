@@ -101,14 +101,14 @@ const Navbar = () => {
 
       <div className="navbar-end gap-2">
         <Link
-          href={"/"}
+          href={"/login"}
           className="btn btn-sm lg:btn-md bg-[#DDE6D8] text-[#4A6B6F] hover:bg-white border-none"
         >
           <span className="flex items-center gap-3">Login <RiLoginBoxLine className="bg-[#4A6B6F] rounded-full p-2 text-[#DDE6D8] h-8 w-8" /></span>
         </Link>
 
         <Link
-          href={"/"}
+          href={"/register"}
           className="btn btn-sm lg:btn-md bg-[#DDE6D8] text-[#4A6B6F] hover:bg-white border-none"
         >
           <span className="flex items-center gap-3">Register <GiArchiveRegister  className="bg-[#4A6B6F] rounded-full p-2 text-[#DDE6D8] h-8 w-8" /></span>

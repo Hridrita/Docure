@@ -11,16 +11,17 @@ const AppointmentModal = ({ doctor }) => {
         </Modal.Trigger>
         <Modal.Backdrop>
           <Modal.Container placement="auto">
-            <Modal.Dialog className="sm:max-w-md bg-slate-50">
+            <Modal.Dialog className="sm:max-w-lg rounded-2xl overflow-hidden shadow-2xl bg-slate-50">
               <Modal.CloseTrigger />
-              <Modal.Header>
-                <Modal.Heading className=" text-2xl font-bold text-center">
+              <Modal.Header className="px-8 pt-8 pb-2">
+                <Modal.Heading className=" text-3xl font-extrabold text-[#4A6B6F] text-center">
                   Book Your Appointment
                 </Modal.Heading>
+                <p className="text-gray-500 mt-2 text-center">Fill the details to confirm your visit with <strong>{doctor.name}</strong></p>
               </Modal.Header>
-              <Modal.Body className="p-6">
+              <Modal.Body className="px-8 py-6">
                 <Surface variant="default">
-                  <form id="appointmentForm" className="flex flex-col gap-4 bg-slate-50">
+                  <form id="appointmentForm" className="flex flex-col gap-5 bg-slate-50">
                     <TextField
                       className="w-full"
                       name="name"
@@ -76,8 +77,8 @@ const AppointmentModal = ({ doctor }) => {
                 <Button slot="close" className="bg-[#DDE6D8] hover:bg-[#DDE6E8] font-bold text-[#4A6B6F]" variant="secondary">
                   Cancel
                 </Button>
-                <Button form="appointmentForm" className="bg-[#4A6B6F] hover:bg-[#4A6B7F] font-bold text-[#DDE6D8]" type="submit">
-                  Confirm
+                <Button form="appointmentForm" className="bg-[#4A6B6F] hover:bg-[#3d5a5e] font-bold text-[#DDE6D8]" type="submit">
+                  Confirm Booking
                 </Button>
               </Modal.Footer>
             </Modal.Dialog>
