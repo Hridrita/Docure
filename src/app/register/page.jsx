@@ -61,7 +61,12 @@ const RegisterPage = () => {
 
     if (error) {
       toast.error(error.message || "Registration failed. Please try again.");
-    }
+    }}
+
+    const handleGoogleSignUp = async() =>{
+      await authClient.signIn.social({
+        provider: "google"
+      })
   };
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F8FAFC] p-6">
@@ -156,6 +161,7 @@ const RegisterPage = () => {
           </div>
 
           <Button
+          onClick={handleGoogleSignUp}
             variant="secondary"
             className="w-full h-12 rounded-xl border border-gray-200 font-bold hover:bg-gray-50"
           >

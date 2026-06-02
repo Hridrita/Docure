@@ -11,7 +11,7 @@ import {
   Separator,
 } from "@heroui/react";
 import { redirect } from "next/navigation";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 const LoginPage = () => {
@@ -30,18 +30,19 @@ const LoginPage = () => {
     console.log(data);
 
     if(data){
-      toast.success("Log in successfull!")
-      redirect('/');
+      toast.success("Login successfull!")
+      window.location.href = "/";
     }
 
     if(error){
-      toast.error(error.message || "Something went wrong.please try again!")
+      console.log("Error:", error);
+      toast.error(error.message);
     }
   }
   return (
     
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-gray-100 p-6">
-      
+      <Toaster></Toaster>
       
       <Card className="w-full max-w-md p-8 shadow-[0_20px_50px_rgba(0,0,0,0.1)] rounded-3xl border border-white bg-white/90 backdrop-blur-sm">
         

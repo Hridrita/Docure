@@ -4,13 +4,22 @@ import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineLogin } from "react-icons/ai";
 import { RiLoginBoxLine } from "react-icons/ri";
+import { FiLogOut } from "react-icons/fi";
 import { GiArchiveRegister } from "react-icons/gi";
 import { authClient } from "@/lib/auth-client";
+import {Avatar, Button} from "@heroui/react";
 
 const Navbar = () => {
   const {data:session} = authClient.useSession()
   console.log(session);
-  
+
+  const user = session?.user;
+  console.log(user);
+
+  const handleSignOut = async() =>{
+    await authClient.signOut();
+  }
+
   const pathname = usePathname();
   const isActive = (href) => pathname === href;
   const links = (
@@ -103,7 +112,21 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 gap-6">{links}</ul>
       </div>
 
+      
+
       <div className="navbar-end gap-2">
+        {
+        user ? <>
+        <li><Avatar>
+        <Avatar.Image alt="John Doe" src={user.image} />
+        <Avatar.Fallback className="bg-[#DDE6D8] text-[#4A6B6F] font-bold">{user.name.charAt(0).toUpperCase()}</Avatar.Fallback>
+      </Avatar></li>
+        <li>
+          <Button onClick={handleSignOut} className="bg-[#DDE6D8] text-[#4A6B6F] hover:bg-white border-none flex items-center gap-3 font-bold">logout <FiLogOut className="bg-[#4A6B6F] rounded-full p-2 text-[#DDE6D8] h-8 w-8" /></Button>
+        </li>
+        </>
+       :
+        <>
         <Link
           href={"/login"}
           className="btn btn-sm lg:btn-md bg-[#DDE6D8] text-[#4A6B6F] hover:bg-white border-none"
@@ -117,6 +140,7 @@ const Navbar = () => {
         >
           <span className="flex items-center gap-3">Register <GiArchiveRegister  className="bg-[#4A6B6F] rounded-full p-2 text-[#DDE6D8] h-8 w-8" /></span>
         </Link>
+        </>}
       </div>
     </div>
   );

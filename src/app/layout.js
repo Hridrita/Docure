@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import { Toaster } from "sonner";
+// import { Toaster } from "react-hot-toast";
 
 
 
@@ -36,6 +37,7 @@ export default function RootLayout({ children }) {
         <Navbar></Navbar>
         {children}
         <Footer></Footer>
+        <Toaster />
         <Toaster />
         </body>
     </html>
