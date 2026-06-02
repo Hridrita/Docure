@@ -38,7 +38,16 @@ const LoginPage = () => {
       console.log("Error:", error);
       toast.error(error.message);
     }
+    
   }
+
+  const handleGoogleSignIn = async() =>{
+      await authClient.signIn.social({
+        provider: "google"
+      })
+    };
+
+
   return (
     
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-gray-100 p-6">
@@ -99,9 +108,10 @@ const LoginPage = () => {
             </div>
 
             <Button
+            onClick={handleGoogleSignIn}
               variant="secondary"
               className="w-full h-14 rounded-2xl border-2 border-gray-100 hover:bg-gray-50 transition-all font-bold text-gray-700"
-              onClick={() => console.log("Google login logic here")}
+              
             >
               <FcGoogle className="mr-2 text-2xl" />
               Sign in with Google
