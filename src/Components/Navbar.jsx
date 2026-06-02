@@ -5,8 +5,12 @@ import Link from "next/link";
 import { AiOutlineLogin } from "react-icons/ai";
 import { RiLoginBoxLine } from "react-icons/ri";
 import { GiArchiveRegister } from "react-icons/gi";
+import { authClient } from "@/lib/auth-client";
 
 const Navbar = () => {
+  const {data:session} = authClient.useSession()
+  console.log(session);
+  
   const pathname = usePathname();
   const isActive = (href) => pathname === href;
   const links = (

@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import {
   Button,
   Card,
@@ -9,9 +10,34 @@ import {
   TextField,
   Separator,
 } from "@heroui/react";
+import { redirect } from "next/navigation";
+import toast from "react-hot-toast";
 import { FcGoogle } from "react-icons/fc";
 
 const LoginPage = () => {
+  const handleLogin = async(e) =>{
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget)
+    const user = Object.fromEntries(formData.entries());
+    // console.log(user);
+
+    const {data,error} = await authClient.signIn.email({
+      email: user.email,
+      password: user.password
+    })
+
+    console.log(data);
+
+    if(data){
+      toast.success("Log in successfull!")
+      redirect('/');
+    }
+
+    if(error){
+      toast.error(error.message || "Something went wrong.please try again!")
+    }
+  }
   return (
     
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-gray-100 p-6">
@@ -28,7 +54,7 @@ const LoginPage = () => {
           </Card.Description>
         </Card.Header>
 
-        <Form className="flex flex-col gap-6">
+        <Form onSubmit={handleLogin} className="flex flex-col gap-6">
           <Card.Content className="flex flex-col gap-5">
             <TextField name="email" type="email" variant="secondary">
               <Label className="text-sm font-bold text-gray-700">Email Address</Label>

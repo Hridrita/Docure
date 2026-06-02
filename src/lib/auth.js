@@ -6,10 +6,7 @@ const client = new MongoClient(process.env.MONGODB_URI);
 const db = client.db("docure");
 
 export const auth = betterAuth({
-  database: mongodbAdapter(db, {
-    
-    client
-  }),
+   database: mongodbAdapter(db),
   emailAndPassword: {
     enabled: true
   }
