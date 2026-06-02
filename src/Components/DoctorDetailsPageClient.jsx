@@ -7,7 +7,7 @@ import AppointmentModal from "./AppointmentModal";
 
 
 const DoctorDetailsPageClient = ({ doctor }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+   
   return (
     <div className="min-h-screen bg-[#f5f7f5]">
       <div className="w-full bg-[#4A6B6F] h-26 relative" />
