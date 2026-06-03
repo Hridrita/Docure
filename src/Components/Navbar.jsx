@@ -8,8 +8,10 @@ import { FiLogOut } from "react-icons/fi";
 import { GiArchiveRegister } from "react-icons/gi";
 import { authClient } from "@/lib/auth-client";
 import {Avatar, Button} from "@heroui/react";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [dashOpen, setDashOpen] = useState(false);
   const {data:session} = authClient.useSession()
   console.log(session);
 
@@ -23,33 +25,49 @@ const Navbar = () => {
   const pathname = usePathname();
   const isActive = (href) => pathname === href;
   const links = (
-    <>
-      <Link
-        href={"/"}
-        className={`text-[#DDE6D8] hover:text-white transition-colors text-base ${isActive("/") ? "text-white font-bold" : "text-[#DDE6D8]"}`}
-      >
+  <>
+    <li>
+      <Link href={"/"} className={`text-[#DDE6D8] hover:text-white transition-colors text-base ${isActive("/") ? "text-white font-bold" : ""}`}>
         Home
       </Link>
-      <Link
-        href={"/appointments"}
-        className={`text-[#DDE6D8] hover:text-white transition-colors text-base ${isActive("/appointments") ? "text-white font-bold" : "text-[#DDE6D8]"}`}
-      >
+    </li>
+    <li>
+      <Link href={"/appointments"} className={`text-[#DDE6D8] hover:text-white transition-colors text-base ${isActive("/appointments") ? "text-white font-bold" : ""}`}>
         All Appointments
       </Link>
-      <Link
-        href={"/dashboard"}
-        className={`text-[#DDE6D8] hover:text-white transition-colors text-base ${isActive("/dashboard") ? "text-white font-bold" : "text-[#DDE6D8]"}`}
+    </li>
+    <li className="relative">
+      <button
+        onClick={() => setDashOpen(!dashOpen)}
+        className={`hover:text-white cursor-pointer flex items-center gap-1 transition-colors text-base ${pathname.startsWith("/dashboard") ? "text-white font-bold" : "text-[#DDE6D8]"}`}
       >
         Dashboard
-      </Link>
-      <Link
-        href={"/add-doctor"}
-        className={`text-[#DDE6D8] hover:text-white transition-colors text-base ${isActive("/add-doctor") ? "text-white font-bold" : "text-[#DDE6D8]"}`}
-      >
+        <svg className={`w-4 h-4 transition-transform ${dashOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {dashOpen && (
+        <ul className="absolute top-full left-0 mt-2 bg-white rounded-xl w-44 py-2 shadow-2xl z-[100] border border-gray-100">
+          <li>
+            <Link href="/dashboard/my-bookings" onClick={() => setDashOpen(false)} className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#4A6B6F] font-medium transition-colors">
+              My Bookings
+            </Link>
+          </li>
+          <li>
+            <Link href="/dashboard/my-profile" onClick={() => setDashOpen(false)} className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#4A6B6F] font-medium transition-colors">
+              My Profile
+            </Link>
+          </li>
+        </ul>
+      )}
+    </li>
+    <li>
+      <Link href={"/add-doctor"} className={`text-[#DDE6D8] hover:text-white transition-colors text-base ${isActive("/add-doctor") ? "text-white font-bold" : ""}`}>
         Add Doctor
       </Link>
-    </>
-  );
+    </li>
+  </>
+);
 
   return (
     <div className="navbar !bg-[#4A6B6F] shadow-sm px-4 lg:px-10">
@@ -86,9 +104,9 @@ const Navbar = () => {
             <li className="hover:bg-[#DDE6D8]/20 rounded-lg transition-all duration-200">
               <Link href={"/appointments"}>All Appointments</Link>
             </li>
-            <li className="hover:bg-[#DDE6D8]/20 rounded-lg transition-all duration-200">
-              <Link href={"/dashboard"}>Dashboard</Link>
-            </li>
+            <li className="text-[#DDE6D8] font-bold">Dashboard</li>
+            <li className="ml-4"><Link href={"/dashboard/my-bookings"}>My Bookings</Link></li>
+            <li className="ml-4"><Link href={"/dashboard/my-profile"}>My Profile</Link></li>
             <li className="hover:bg-[#DDE6D8]/20 rounded-lg transition-all duration-200">
               <Link href={"/add-doctor"}>Add Doctor</Link>
             </li>
@@ -109,7 +127,7 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 gap-6">{links}</ul>
+        <ul className="menu menu-horizontal px-1 gap-6 overflow-visible">{links}</ul>
       </div>
 
       
