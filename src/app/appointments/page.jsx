@@ -42,7 +42,7 @@ const AllAppointmentsPage = () => {
 
   return (
     <div className="bg-[#DDE6D8] min-h-screen py-10 px-4">
-      <div className="text-center mb-16 mt-5">
+      <div className="text-center mb-16 mt-5 max-w-7xl mx-auto">
         <h1 className="text-3xl md:text-4xl font-extrabold text-[#4A6B6F] mb-4">
           <span className="italic text-[#4A6B6F] font-serif ml-3">
             Meet Professional Doctors & Specialists

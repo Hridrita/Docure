@@ -12,7 +12,7 @@ export default function DoctorCardAnimation({ doctor }) {
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="p-4 rounded-3xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300">
+      <Card className="max-w-7xl mx-auto p-4 rounded-3xl shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-300">
         <div className="flex-col items-center text-center">
           <Image
             alt={doctor.name}

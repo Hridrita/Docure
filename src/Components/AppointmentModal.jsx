@@ -18,6 +18,7 @@ const AppointmentModal = ({ doctor }) => {
 
 
     const bookingData = {
+      userId: user.id,
       email: user.email,
       doctorName: doctor.name,
       patientName: user2.name,
