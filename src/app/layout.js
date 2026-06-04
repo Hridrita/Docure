@@ -1,25 +1,27 @@
-import { Geist, Geist_Mono, Inter, Outfit, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Inter,
+  Outfit,
+  Plus_Jakarta_Sans,
+} from "next/font/google";
 import "./globals.css";
 import Navbar from "@/Components/Navbar";
 import Footer from "@/Components/Footer";
 import { Toaster } from "sonner";
-// import { Toaster } from "react-hot-toast";
-
-
 
 const inter = Inter({
   variable: "--font-inter",
-  subsets: ["latin"]
+  subsets: ["latin"],
 });
 
 const jakarta = Plus_Jakarta_Sans({
-  
-  subsets: ["latin"]
+  subsets: ["latin"],
 });
 
 const outfit = Outfit({
   variable: "--font-outfit",
-  subsets: ["latin"]
+  subsets: ["latin"],
 });
 
 export const metadata = {
@@ -29,17 +31,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html
-      lang="en"
-      className={`${jakarta.className}  h-full antialiased`}
-    >
+    <html lang="en" className={`${jakarta.className}  h-full antialiased`}>
       <body className="min-h-full flex flex-col ">
         <Navbar></Navbar>
         {children}
         <Footer></Footer>
+
         <Toaster />
-        <Toaster />
-        </body>
+      </body>
     </html>
   );
 }
