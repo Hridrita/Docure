@@ -1,7 +1,7 @@
 import { FaUserMd, FaCalendarAlt, FaClock, FaPhoneAlt, FaVenusMars, FaEdit, FaTrash } from "react-icons/fa";
 import EditModal from "./EditModal";
 
-const MyBookingsCard = ({ booking }) => {
+const MyBookingsCard = ({ booking, onUpdate }) => {
     const { doctorName, patientName, gender, phone, appointmentDate, appointmentTime } = booking;
 
     return (
@@ -18,14 +18,8 @@ const MyBookingsCard = ({ booking }) => {
                     </p>
                 </div>
                 <div className="flex gap-3">
-                    <EditModal booking={booking}></EditModal>
-                    {/* <button 
-                      className="p-3 bg-[#4A7C80]/10 text-[#4A7C80] rounded-xl hover:bg-[#4A7C80]/20 focus:outline-none focus:ring-2 focus:ring-[#4A7C80] transition"
-                      title="Edit"
-                      aria-label={`Edit booking for ${patientName}`}
-                    >
-                        <FaEdit />
-                    </button> */}
+                    <EditModal booking={booking} onUpdate={onUpdate}></EditModal>
+                    
                     <button 
                       className="p-3 bg-red-100 text-red-600 rounded-xl hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-red-400 transition"
                       title="Delete"

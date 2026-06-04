@@ -5,9 +5,13 @@ import { useEffect, useState } from "react";
 import { FaMapMarkerAlt, FaHospital, FaClock, FaStar } from "react-icons/fa";
 import AppointmentModal from "./AppointmentModal";
 
-
-
 const DoctorDetailsPageClient = ({ doctor }) => {
+
+  useEffect(()=>{
+    if(doctor){
+      localStorage.setItem('selectedDoctor', JSON.stringify(doctor));
+    }
+  },[doctor]);
   
    
   return (

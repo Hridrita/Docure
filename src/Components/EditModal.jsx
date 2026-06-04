@@ -1,13 +1,43 @@
 "use client";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { FaEdit } from "react-icons/fa";
 
-const EditModal = ({ booking }) => {
+const EditModal = ({ booking, onUpdate }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [doctorInfo, setDoctorInfo] = useState(null);
+
+  useEffect(()=>{
+    const savedDoctor = localStorage.getItem('selectedDoctor');
+    if(savedDoctor){
+        setDoctorInfo(JSON.parse(savedDoctor));
+    }
+  }, []);
+
+  const onSubmit = async(e) =>{
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget)
+    const data = Object.fromEntries(formData.entries());
+
+    const res = await fetch(`http://localhost:5000/bookings/${booking._id}`,{
+        method: "PATCH",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    });
+
+    if(res.ok){
+        onUpdate({...booking, ...data})
+        setIsOpen(false);
+        toast.success("Booking Updated!");
+    }
+  }
   
   return (
     <div>
+        <Toaster></Toaster>
       <Modal isOpen={isOpen} onOpenChange={setIsOpen}>
         <Modal.Trigger className="w-full">
           <button
@@ -37,11 +67,11 @@ const EditModal = ({ booking }) => {
                   variant="default"
                   className="bg-transparent shadow-none"
                 >
-                  <form id="appointmentForm" className="flex flex-col gap-4">
+                  <form onSubmit={onSubmit} id="appointmentForm" className="flex flex-col gap-4">
                     <TextField
                       defaultValue={booking.patientName}
                       className="w-full"
-                      name="name"
+                      name="patientName"
                       type="text"
                       variant="secondary"
                     >
@@ -74,7 +104,7 @@ const EditModal = ({ booking }) => {
                     <TextField
                       defaultValue={booking.appointmentDate}
                       className="w-full"
-                      name="date"
+                      name="appointmentDate"
                       type="date"
                       variant="secondary"
                     >
@@ -86,20 +116,16 @@ const EditModal = ({ booking }) => {
                       <Label>Appointment Time</Label>
                       <select
                         required
-                        name="time"
+                        name="appointmentTime"
                         defaultValue={booking.appointmentTime}
                         className="w-full h-11 px-3 rounded-lg border border-gray-200 bg-gray-50 focus:border-[#4A6B6F] focus:ring-1 focus:ring-[#4A6B6F] outline-none transition text-sm sm:text-base"
                       >
                         <option value={booking.appointmentTime}>
                           {booking.appointmentTime}
                         </option>
-                        {/* {doctorInfo?.availability
-                          ?.filter((time) => time !== booking.appointmentTime)
-                          .map((time, i) => (
-                            <option key={i} value={time}>
-                              {time}
-                            </option>
-                          ))} */}
+                        {doctorInfo?.availability?.map((time, i) => (
+                <option key={i} value={time}>{time}</option>
+            ))}
                       </select>
                     </TextField>
                   </form>

@@ -1,42 +1,46 @@
+'use client'
 import MyBookingsCard from "@/Components/MyBookingsCard";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { authClient } from "@/lib/auth-client";
+import { useEffect, useState } from "react";
 
+const MyBookingPage = () => {
+  const [bookings, setBookings] = useState([]);
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
-
-
-const MyBookingPage = async() => {
-    const session = await auth.api.getSession({
-        headers: await headers(),
-    });
-    // console.log("session",session);
-
-    const user = session?.user;
-    // console.log("user:",user);
-
-    let bookings = [];
-
-    try{
-        const res = await fetch(`http://localhost:5000/bookings/${user?.id}`);
-        bookings = await res.json();
-        console.log(bookings);
-    } catch (error) {
-        console.log(error);
+ 
+  useEffect(() => {
+    if (user?.id) {
+      fetch(`http://localhost:5000/bookings/${user.id}`)
+        .then((res) => res.json())
+        .then((data) => setBookings(data))
+        .catch((error) => console.log(error));
     }
+  }, [user?.id]);
 
-
-    return (
-        <div className="max-w-7xl mx-auto">
-            <h1 className="font-semibold text-3xl mb-5 mt-8">My bookings</h1>
-            <div className="space-y-5 pb-6">
-                {
-                    bookings.map((booking)=>(
-                    <MyBookingsCard key={booking._id} booking={booking}></MyBookingsCard>
-                ))
-                }
-            </div>
-        </div>
+  
+  const handleBookingUpdate = (updatedBooking) => {
+    setBookings((prevBookings) =>
+      prevBookings.map((b) =>
+        b._id === updatedBooking._id ? { ...b, ...updatedBooking } : b
+      )
     );
+  };
+
+  return (
+    <div className="max-w-7xl mx-auto">
+      <h1 className="font-semibold text-3xl mb-5 mt-8">My bookings</h1>
+      <div className="space-y-5 pb-6">
+        {bookings?.map((booking) => (
+          <MyBookingsCard 
+            key={booking._id} 
+            booking={booking} 
+            onUpdate={handleBookingUpdate} 
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default MyBookingPage;
