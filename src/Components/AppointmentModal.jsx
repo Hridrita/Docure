@@ -12,13 +12,17 @@ const AppointmentModal = ({ doctor }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user) {
+      toast.error("Please login to book an appointment!");
+      return;
+    }
     const formData = new FormData(e.currentTarget);
     const user2 = Object.fromEntries(formData.entries());
     console.log(user2);
 
     const bookingData = {
-      userId: user.id,
-      email: user.email,
+      userId: user?.id,
+      email: user?.email,
       doctorName: doctor.name,
       patientName: user2.name,
       gender: user2.gender,
