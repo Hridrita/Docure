@@ -9,7 +9,12 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'i.ibb.co', // এটি যেন একদম সঠিক থাকে
+        hostname: 'i.ibb.co', 
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'i.ibb.co.com', 
       },
     ],
   },
