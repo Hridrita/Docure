@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 
 const MyProfilePage = () => {
     const [userProfile, setUserProfile] = useState(null);
-    const { data: session, isPending } = authClient.useSession();
-    console.log("session from my prfile page:", session);
+    const { data: session, isPending, refetch } = authClient.useSession();
+    // console.log("session from my prfile page:", session);
+    console.log(authClient.useSession());
 
     useEffect(()=>{
         if(session?.user){
@@ -113,7 +114,7 @@ const MyProfilePage = () => {
                         </div>
                     ))}
 
-                    {user && <ProfileUpdateModal user={user} setUserProfile={setUserProfile} ></ProfileUpdateModal>}
+                    {user && <ProfileUpdateModal user={user} setUserProfile={setUserProfile} refetch={refetch} ></ProfileUpdateModal>}
                 </div>
 
             </div>

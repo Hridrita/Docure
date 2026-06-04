@@ -2,7 +2,7 @@ import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
-const ProfileUpdateModal = ({user, setUserProfile}) => {
+const ProfileUpdateModal = ({user, setUserProfile, refetch}) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const onSubmit = async(e) =>{
@@ -23,6 +23,9 @@ const ProfileUpdateModal = ({user, setUserProfile}) => {
 
       if(res.ok){
         setUserProfile((prev)=> ({...prev, ...data}))
+        if (refetch) {
+          await refetch(); 
+      }
         toast.success("Profile upadated successfully!")
         setIsOpen(false)
       }
