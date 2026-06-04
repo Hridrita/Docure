@@ -144,7 +144,7 @@ const EditModal = ({ booking, onUpdate }) => {
                   className="w-full sm:w-auto flex-1 text-base bg-[#4A6B6F] hover:bg-[#3d5a5e] font-bold text-white rounded-xl"
                   type="submit"
                 >
-                  Update Booking
+                  Save Changes
                 </Button>
               </Modal.Footer>
             </Modal.Dialog>
