@@ -9,6 +9,7 @@ import { toast } from "sonner";
 const AllAppointmentsPage = () => {
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const fetchDoctors = async () => {
     try {
@@ -32,6 +33,10 @@ const AllAppointmentsPage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  const filteredDoctors = doctors.filter((doc) =>
+    doc.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   if (loading)
     return (
       <div className="flex flex-col items-center gap-2">
@@ -53,10 +58,21 @@ const AllAppointmentsPage = () => {
           platform, designed to provide you with seamless access to high-quality
           healthcare and expert consultations whenever you need them.
         </p>
+        <div className="max-w-md mx-auto mt-6">
+          <input
+            type="text"
+            placeholder="Search doctors by name..."
+            className="w-full px-5 py-3 rounded-full border border-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4A6B6F]"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {doctors.map((doc) => (
+        {filteredDoctors.length > 0 ? (
+          filteredDoctors.map((doc) => 
+        (
           <div
             key={doc._id}
             className="card bg-slate-100 rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden"
@@ -94,7 +110,11 @@ const AllAppointmentsPage = () => {
               </div>
             </div>
           </div>
-        ))}
+        ))) : (
+          <div className="col-span-full text-center py-10 text-xl text-[#4A6B6F] font-bold">
+      No doctor was found 
+    </div>
+        )}
       </div>
     </div>
   );
