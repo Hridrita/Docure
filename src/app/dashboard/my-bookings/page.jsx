@@ -35,7 +35,10 @@ const MyBookingPage = () => {
   return (
     <div className="max-w-7xl mx-auto">
         <Toaster></Toaster>
-      <h1 className="font-semibold text-3xl mb-5 mt-8">My Appointments</h1>
+      {
+        bookings.length > 0 ? (
+            <>
+            <h1 className="font-semibold text-3xl mb-5 mt-8">My Appointments</h1>
       <div className="space-y-5 pb-6">
         {bookings?.map((booking) => (
           <MyBookingsCard 
@@ -46,6 +49,15 @@ const MyBookingPage = () => {
           />
         ))}
       </div>
+            </>
+        ) : (
+            <div className="text-center py-20 px-40 bg-gray-50 rounded-xl mt-10 mb-20">
+            <h2 className="text-xl text-gray-600">You have no appointment yet</h2>
+            <a href={"/appointments"} className="text-[#4A6B6F] font-bold underline mt-2 block">
+                Book an appointment now
+            </a>
+        </div>
+        )}
     </div>
   );
 };
