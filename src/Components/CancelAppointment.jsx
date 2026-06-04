@@ -1,9 +1,30 @@
 "use client";
 
 import { AlertDialog, Button } from "@heroui/react";
+import toast from "react-hot-toast";
 import { FaTrash } from "react-icons/fa";
 
-const CancelAppointment = ({booking}) => {
+const CancelAppointment = ({booking,onDelete}) => {
+    const handleDelete = async() =>{
+        try{
+            const res = await fetch(`http://localhost:5000/bookings/${booking._id}`,{
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            
+        })
+
+        if(res.ok){
+            toast.success("Appointment deleted successfully!")
+            onDelete(booking._id)
+        } else {
+            throw new Error("Failed to delete");
+        }
+        } catch(error) {
+            toast.error("Something went wrong, please try again.")
+        }
+    }
   return (
     <AlertDialog>
         <AlertDialog.Trigger>
@@ -31,7 +52,7 @@ const CancelAppointment = ({booking}) => {
               <Button slot="close" variant="tertiary">
                 Cancel
               </Button>
-              <Button slot="close" variant="danger">
+              <Button onClick={handleDelete} slot="close" variant="danger">
                 Delete Appointment
               </Button>
             </AlertDialog.Footer>

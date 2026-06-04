@@ -2,7 +2,7 @@ import { FaUserMd, FaCalendarAlt, FaClock, FaPhoneAlt, FaVenusMars, FaEdit, FaTr
 import EditModal from "./EditModal";
 import CancelAppointment from "./CancelAppointment";
 
-const MyBookingsCard = ({ booking, onUpdate }) => {
+const MyBookingsCard = ({ booking, onUpdate, onDelete }) => {
     const { doctorName, patientName, gender, phone, appointmentDate, appointmentTime } = booking;
 
     return (
@@ -21,7 +21,7 @@ const MyBookingsCard = ({ booking, onUpdate }) => {
                 <div className="flex gap-3">
                     <EditModal booking={booking} onUpdate={onUpdate}></EditModal>
 
-                    <CancelAppointment booking={booking}></CancelAppointment>
+                    <CancelAppointment booking={booking} onDelete={onDelete}></CancelAppointment>
                     
                     {/*  */}
                 </div>

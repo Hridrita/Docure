@@ -50,7 +50,7 @@ const Navbar = () => {
         <ul className="absolute top-full left-0 mt-2 bg-white rounded-xl w-44 py-2 shadow-2xl z-[100] border border-gray-100">
           <li>
             <Link href="/dashboard/my-bookings" onClick={() => setDashOpen(false)} className="block px-4 py-3 text-gray-700 hover:bg-gray-50 hover:text-[#4A6B6F] font-medium transition-colors">
-              My Bookings
+              My Appointments
             </Link>
           </li>
           <li>

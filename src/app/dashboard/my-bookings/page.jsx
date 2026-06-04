@@ -2,6 +2,7 @@
 import MyBookingsCard from "@/Components/MyBookingsCard";
 import { authClient } from "@/lib/auth-client";
 import { useEffect, useState } from "react";
+import { Toaster } from "react-hot-toast";
 
 const MyBookingPage = () => {
   const [bookings, setBookings] = useState([]);
@@ -27,8 +28,13 @@ const MyBookingPage = () => {
     );
   };
 
+  const handleBookingDelete = (id) =>{
+    setBookings((prev) => prev.filter((b)=> b._id !== id))
+  }
+
   return (
     <div className="max-w-7xl mx-auto">
+        <Toaster></Toaster>
       <h1 className="font-semibold text-3xl mb-5 mt-8">My Appointments</h1>
       <div className="space-y-5 pb-6">
         {bookings?.map((booking) => (
@@ -36,6 +42,7 @@ const MyBookingPage = () => {
             key={booking._id} 
             booking={booking} 
             onUpdate={handleBookingUpdate} 
+            onDelete={handleBookingDelete}
           />
         ))}
       </div>
