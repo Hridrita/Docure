@@ -1,11 +1,29 @@
 'use client'
 
+import ProfileUpdateModal from "@/Components/ProfileUpdateModal";
 import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 
 const MyProfilePage = () => {
-    const { data: session } = authClient.useSession();
-    const user = session?.user;
+    const [userProfile, setUserProfile] = useState(null);
+    const { data: session, isPending } = authClient.useSession();
+    console.log("session from my prfile page:", session);
+
+    useEffect(()=>{
+        if(session?.user){
+            setUserProfile(session.user)
+        }
+    }, [session])
+
+    if (isPending) {
+        return <div className="text-center py-20">Loading profile data...</div>;
+    }
+
+    if (!session?.user) {
+        return <div className="text-center py-20">No user data found. Please login.</div>;
+    }
+    const user = userProfile;
 
     const initials = user?.name
         ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)
@@ -95,12 +113,7 @@ const MyProfilePage = () => {
                         </div>
                     ))}
 
-                    <button className="w-full mt-4 py-3.5 bg-[#4A6B6F] hover:bg-[#3a5558] active:scale-[0.98] text-[#DDE6D8] rounded-[14px] font-medium text-[15px] flex items-center justify-center gap-2 transition-all duration-200">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
-                        </svg>
-                        Update profile
-                    </button>
+                    {user && <ProfileUpdateModal user={user} setUserProfile={setUserProfile} ></ProfileUpdateModal>}
                 </div>
 
             </div>
