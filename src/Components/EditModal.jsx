@@ -31,7 +31,7 @@ const EditModal = ({ booking, onUpdate }) => {
     if(res.ok){
         onUpdate({...booking, ...data})
         setIsOpen(false);
-        toast.success("Booking Updated!");
+        toast.success(`updated ${booking.doctorName}'s appointment`);
     }
   }
   

@@ -29,7 +29,7 @@ const MyBookingPage = () => {
 
   return (
     <div className="max-w-7xl mx-auto">
-      <h1 className="font-semibold text-3xl mb-5 mt-8">My bookings</h1>
+      <h1 className="font-semibold text-3xl mb-5 mt-8">My Appointments</h1>
       <div className="space-y-5 pb-6">
         {bookings?.map((booking) => (
           <MyBookingsCard 
