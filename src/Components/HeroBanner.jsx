@@ -74,7 +74,7 @@ const HeroBanner = () => {
               <div className="flex gap-4 flex-wrap">
                 <Link href={"/appointments"}>
                   <button className="px-7 py-3 bg-[#a8d5ba] text-[#0f2027] font-bold rounded-full hover:scale-105 transition-transform">
-                    Book Now
+                    Get your appointment
                   </button>
                 </Link>
                 <Link href={"/"}>

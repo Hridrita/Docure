@@ -8,12 +8,16 @@ import { FiLogOut } from "react-icons/fi";
 import { GiArchiveRegister } from "react-icons/gi";
 import { authClient } from "@/lib/auth-client";
 import {Avatar, Button} from "@heroui/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const [dashOpen, setDashOpen] = useState(false);
   const {data:session} = authClient.useSession()
   console.log(session);
+
+//   useEffect(() => {
+  
+// }, [session]);
 
   const user = session?.user;
   console.log(user);
@@ -70,7 +74,7 @@ const Navbar = () => {
 );
 
   return (
-    <div className="navbar !bg-[#4A6B6F] shadow-sm px-4 lg:px-10">
+    <div className="navbar !bg-[#4A6B6F] shadow-sm px-4 lg:px-10 sticky top-0 z-50">
       <div className="navbar-start">
         <div className="dropdown lg:hidden">
           <div

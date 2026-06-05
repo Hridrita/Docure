@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { Input, TextField, Label, TextArea, Button, Card } from "@heroui/react";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -63,9 +64,15 @@ const AddDoctorPage = () => {
     }
 
     try {
+      const {data:tokenData} = await authClient.token()
+          console.log("tokenData", tokenData)
+
       const res = await fetch("http://localhost:5000/doctors", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json" ,
+          authorization: `Bearer ${tokenData?.token}`
+        },
         body: JSON.stringify(submissionData),
       });
       const data = await res.json();

@@ -1,14 +1,20 @@
 import DoctorDetailsPageClient from "@/Components/DoctorDetailsPageClient";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 import { notFound } from 'next/navigation';
 
 
 const DoctorDetailsPage = async ({ params }) => {
 const { id } = await params;
+const {token} = await auth.api.getToken({
+  headers: await headers()
+})
+console.log('token:',token);
 
   // fetch doctor data
   const res = await fetch(`http://localhost:5000/doctors/${id}`,{
     headers: {
-      Authorization: "logged in"
+      authorization: `Bearer ${token}`
     },
     cache: 'no-store'
   });

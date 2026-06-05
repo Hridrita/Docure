@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
@@ -20,10 +21,14 @@ const EditModal = ({ booking, onUpdate }) => {
     const formData = new FormData(e.currentTarget)
     const data = Object.fromEntries(formData.entries());
 
+    const {data:tokenData} = await authClient.token()
+        console.log("tokenData", tokenData)
+
     const res = await fetch(`http://localhost:5000/bookings/${booking._id}`,{
         method: "PATCH",
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            authorization: `Bearer ${tokenData?.token}`
         },
         body: JSON.stringify(data)
     });

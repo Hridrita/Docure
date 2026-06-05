@@ -6,16 +6,18 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const MyProfilePage = () => {
-    const [userProfile, setUserProfile] = useState(null);
+    // const [userProfile, setUserProfile] = useState(null);
     const { data: session, isPending, refetch } = authClient.useSession();
     // console.log("session from my prfile page:", session);
     console.log(authClient.useSession());
 
-    useEffect(()=>{
-        if(session?.user){
-            setUserProfile(session.user)
-        }
-    }, [session])
+    const user = session?.user;
+
+    // useEffect(()=>{
+    //     if(session?.user){
+    //         setUserProfile(session.user)
+    //     }
+    // }, [session])
 
     if (isPending) {
         return <div className="text-center py-20">Loading profile data...</div>;
@@ -24,7 +26,7 @@ const MyProfilePage = () => {
     if (!session?.user) {
         return <div className="text-center py-20">No user data found. Please login.</div>;
     }
-    const user = userProfile;
+    // const user = userProfile;
 
     const initials = user?.name
         ? user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)
@@ -114,7 +116,7 @@ const MyProfilePage = () => {
                         </div>
                     ))}
 
-                    {user && <ProfileUpdateModal user={user} setUserProfile={setUserProfile} refetch={refetch} ></ProfileUpdateModal>}
+                    {user && <ProfileUpdateModal user={user} refetch={refetch} ></ProfileUpdateModal>}
                 </div>
 
             </div>

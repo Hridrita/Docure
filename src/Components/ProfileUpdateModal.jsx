@@ -1,42 +1,31 @@
+'use client'
+import { authClient } from "@/lib/auth-client";
 import { Button, Input, Label, Modal, Surface, TextField } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 
 const ProfileUpdateModal = ({user, setUserProfile, refetch}) => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
 
   const onSubmit = async(e) =>{
-    e.preventDefault();
+  e.preventDefault();
+  const formData = new FormData(e.currentTarget)
+  const data = Object.fromEntries(formData.entries());
 
-    const formData = new FormData(e.currentTarget)
-    const data = Object.fromEntries(formData.entries());
-    console.log(data);
-
-    try{
-      const res = await fetch(`http://localhost:5000/user/${user.id}`,{
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(data)
-      });
-
-      if(res.ok){
-        setUserProfile((prev)=> ({...prev, ...data}))
-        if (refetch) {
-          await refetch(); 
-      }
-        toast.success("Profile upadated successfully!")
-        setIsOpen(false)
-      }
-
-      // if(refetch){
-      //   await refetch();
-      // }
-    } catch (error) {
-      console.log(error);
-    }
+  try{
+    await authClient.updateUser({
+      name: data.name,
+      image: data.image,
+    })
+    toast.success("Profile updated successfully!")
+    setIsOpen(false)
+  } catch (error) {
+    console.log(error);
+    toast.error("Update failed!")
   }
+}
   return (
     <div>
       <Toaster></Toaster>

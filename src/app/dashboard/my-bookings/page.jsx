@@ -9,14 +9,32 @@ const MyBookingPage = () => {
   const { data: session } = authClient.useSession();
   const user = session?.user;
 
- 
+  
   useEffect(() => {
-    if (user?.id) {
-      fetch(`http://localhost:5000/bookings/${user.id}`)
-        .then((res) => res.json())
-        .then((data) => setBookings(data))
-        .catch((error) => console.log(error));
-    }
+    const fetchBookings = async () => {
+      if (!user?.id) return;
+
+      try {
+        const { data: tokenData } = await authClient.token();
+        
+        const response = await fetch(`http://localhost:5000/bookings/${user.id}`, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'authorization': `Bearer ${tokenData?.token}`, 
+          },
+        });
+
+        if (!response.ok) throw new Error("Failed to fetch");
+        
+        const data = await response.json();
+        setBookings(data);
+      } catch (error) {
+        console.error("Error fetching bookings:", error);
+      }
+    };
+
+    fetchBookings();
   }, [user?.id]);
 
   
