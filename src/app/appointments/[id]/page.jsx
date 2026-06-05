@@ -3,6 +3,30 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { notFound } from 'next/navigation';
 
+export async function generateMetadata({ params }) {
+  const { id } = await params;
+  const {token} = await auth.api.getToken({
+  headers: await headers()
+})
+  
+  const res = await fetch(`http://localhost:5000/doctors/${id}`,{
+    headers: {
+      authorization: `Bearer ${token}`
+    },
+    cache: 'no-store'
+  });
+
+  if (!res.ok) {
+    return { title: 'Doctor Not Found' };
+  }
+
+  const doctor = await res.json();
+
+  return {
+    title: `${doctor.name} - Details`,
+    description: doctor.description || `View details for ${doctor.name}`,
+  };
+}
 
 const DoctorDetailsPage = async ({ params }) => {
 const { id } = await params;
