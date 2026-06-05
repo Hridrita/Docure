@@ -1,4 +1,5 @@
 "use client";
+import { authClient } from "@/lib/auth-client";
 import { Spinner } from "@heroui/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +14,7 @@ const AllAppointsmentClient = () => {
 
   const fetchDoctors = async () => {
     try {
+        
       const res = await fetch("http://localhost:5000/doctors");
       const data = await res.json();
       setDoctors(data);
