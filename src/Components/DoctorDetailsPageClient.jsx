@@ -7,11 +7,17 @@ import AppointmentModal from "./AppointmentModal";
 
 const DoctorDetailsPageClient = ({ doctor }) => {
 
-  useEffect(()=>{
-    if(doctor){
-      localStorage.setItem('selectedDoctor', JSON.stringify(doctor));
-    }
-  },[doctor]);
+  // useEffect(()=>{
+  //   if(doctor){
+  //     localStorage.setItem('selectedDoctor', JSON.stringify(doctor));
+  //   }
+  // },[doctor]);
+
+  useEffect(() => {
+  if (typeof window !== 'undefined' && doctor) {
+    localStorage.setItem('selectedDoctor', JSON.stringify(doctor));
+  }
+}, [doctor]);
   
    
   return (
