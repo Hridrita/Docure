@@ -48,7 +48,8 @@ const MyBookingPageClient = () => {
     setBookings((prev) => prev.filter((b)=> b._id !== id))
   }
     return (
-        <div className="max-w-7xl mx-auto">
+        <div className="min-h-screen bg-[#f5f7f5]">
+          <div className="max-w-7xl mx-auto">
         <Toaster></Toaster>
       {
         bookings.length > 0 ? (
@@ -74,6 +75,7 @@ const MyBookingPageClient = () => {
         </div>
         )}
     </div>
+        </div>
     );
 };
 
