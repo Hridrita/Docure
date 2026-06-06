@@ -63,7 +63,7 @@ const AllAppointsmentClient = () => {
           <input
             type="text"
             placeholder="Search doctors by name..."
-            className="w-full px-5 py-3 rounded-full border border-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4A6B6F]"
+            className="w-full px-5 py-3 rounded-full border border-gray-500 focus:outline-none focus:ring-2 focus:ring-[#4A6B6F] bg-white text-[#4A6B6F] placeholder:text-[#4A6B6F]/50"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
