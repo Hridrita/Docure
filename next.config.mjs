@@ -1,6 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: 'standalone',
   reactCompiler: true,
+  experimental: {
+    serverExternalPackages: ['@better-auth/kysely-adapter', 'kysely'],
+  },
   images: {
     remotePatterns: [
       {
@@ -18,9 +22,11 @@ const nextConfig = {
       },
     ],
   },
-  experimental: {
-serverComponentsExternalPackages: ['@better-auth/kysely-adapter'],
-},
 };
 
 export default nextConfig;
+
+
+
+
+

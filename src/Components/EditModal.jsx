@@ -24,7 +24,7 @@ const EditModal = ({ booking, onUpdate }) => {
     const {data:tokenData} = await authClient.token()
         console.log("tokenData", tokenData)
 
-    const res = await fetch(`http://localhost:5000/bookings/${booking._id}`,{
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/bookings/${booking._id}`,{
         method: "PATCH",
         headers: {
             'Content-Type': 'application/json',

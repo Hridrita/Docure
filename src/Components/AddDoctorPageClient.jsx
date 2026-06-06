@@ -67,7 +67,7 @@ const AddDoctorPageClient = () => {
       const {data:tokenData} = await authClient.token()
           console.log("tokenData", tokenData)
 
-      const res = await fetch("http://localhost:5000/doctors", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/doctors`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json" ,

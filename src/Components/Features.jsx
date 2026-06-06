@@ -1,11 +1,11 @@
 import { Card } from "@heroui/react";
 import { DoctorDetailsButton } from "@/Components/DoctorDetailsButton";
 import Image from "next/image";
-import DoctorCardAnimation from "./DoctorCardAnimation"; // নতুন অ্যানিমেশন কম্পোনেন্ট
+import DoctorCardAnimation from "./DoctorCardAnimation"; 
 
 const Features = async () => {
   try {
-    const res = await fetch("http://localhost:5000/featured", { cache: 'no-store' });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/featured`, { cache: 'no-store' });
     const doctors = await res.json();
 
     return (

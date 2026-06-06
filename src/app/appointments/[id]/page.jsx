@@ -9,7 +9,7 @@ export async function generateMetadata({ params }) {
   headers: await headers()
 })
   
-  const res = await fetch(`http://localhost:5000/doctors/${id}`,{
+  const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/doctors/${id}`,{
     headers: {
       authorization: `Bearer ${token}`
     },
@@ -36,7 +36,7 @@ const {token} = await auth.api.getToken({
 console.log('token:',token);
 
   // fetch doctor data
-  const res = await fetch(`http://localhost:5000/doctors/${id}`,{
+  const res = await fetch(`${process.env.NEXT_P}UBLIC_SERVER_URL/doctors/${id}`,{
     headers: {
       authorization: `Bearer ${token}`
     },
