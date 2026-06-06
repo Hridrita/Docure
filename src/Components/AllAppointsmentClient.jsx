@@ -81,7 +81,7 @@ const AllAppointsmentClient = () => {
             <figure className="relative h-68 w-full">
               <Image
                 src={
-                  doc.image && doc.image.startsWith("https")
+                  doc.image && doc.image?.startsWith("https")
                     ? doc.image
                     : "https://i.ibb.co/R4pT6VHt/image.png"
                 }

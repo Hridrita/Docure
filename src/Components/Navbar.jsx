@@ -43,7 +43,7 @@ const Navbar = () => {
     <li className="relative">
       <button
         onClick={() => setDashOpen(!dashOpen)}
-        className={`hover:text-white cursor-pointer flex items-center gap-1 transition-colors text-base ${pathname.startsWith("/dashboard") ? "text-white font-bold" : "text-[#DDE6D8]"}`}
+        className={`hover:text-white cursor-pointer flex items-center gap-1 transition-colors text-base ${pathname?.startsWith("/dashboard") ? "text-white font-bold" : "text-[#DDE6D8]"}`}
       >
         Dashboard
         <svg className={`w-4 h-4 transition-transform ${dashOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -42,7 +42,7 @@ const AddDoctorPageClient = () => {
         "Please enter a correct name (at least 3 characters)";
     if (!form.fee || parseInt(form.fee) < 0 || isNaN(parseInt(form.fee)))
       newErrors.fee = "Doctor's fee should be a positive number";
-    if (!form.image || !form.image.startsWith("http"))
+    if (!form.image || !form.image?.startsWith("http"))
       newErrors.image =
         "Please enter a correct image URL starting with http";
     if (!form.experience)

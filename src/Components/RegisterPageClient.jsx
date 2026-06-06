@@ -29,7 +29,7 @@ const RegisterPageClient = () => {
     if (!user.email) newErrors.email = "email is required";
     if (!user.image) {
       newErrors.image = "Image URL is required";
-    } else if (!user.image.startsWith("http")) {
+    } else if (!user.image?.startsWith("http")) {
       newErrors.image = "Please provide a valid URL";
     }
 
