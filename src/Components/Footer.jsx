@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { FaFacebook, FaTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
+import { FaFacebook, FaXTwitter, FaInstagram, FaLinkedin } from 'react-icons/fa';
 
 const Footer = () => {
     return (
@@ -24,7 +24,7 @@ const Footer = () => {
                         <FaFacebook size={20} />
                     </a>
                     <a href="#" className="p-3 bg-white text-black rounded-full hover:bg-gray-300 transition-all">
-                        <FaTwitter size={20} />
+                        <FaXTwitter size={20} />
                     </a>
                     <a href="#" className="p-3 bg-white text-black rounded-full hover:bg-gray-300 transition-all">
                         <FaInstagram size={20} />
