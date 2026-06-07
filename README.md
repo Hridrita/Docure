@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Docure 🏥
 
-## Getting Started
+**Docure** is a comprehensive online Doctor Appointment & Management System built with **Next.js 15**, **Better Auth**, and an **Express.js** backend connected to **MongoDB**. It allows users to browse doctors, view detailed profiles, and manage their health journey through a secure dashboard.
 
-First, run the development server:
+
+## 🌐 Live Demo
+
+* **Frontend:** https://docure-lyart.vercel.app
+* **Backend:** https://docure-server.vercel.app
+
+
+## ✨ Key Features
+
+### 🔐 Authentication (Better Auth)
+
+* **Secure Access:** Email/Password authentication.
+* **Session Handling:** Persistent user sessions using `useSession` hook.
+* **Route Protection:** Middleware restricts unauthorized access to profile and appointment pages.
+* **Profile Management:** Update user name and avatar via a dynamic dashboard modal.
+
+### 👩‍⚕️ Doctor & Appointment System
+
+* **Doctor Discovery:** Browse doctors by category, experience, and fee.
+* **Smart Booking:** Book appointments with specific time slots.
+* **Appointment Lifecycle:** -
+* **Create:** Book new appointments seamlessly.
+* **Read:** View a dedicated "My Appointments" dashboard.
+* **Update:** Edit appointment details (date/time/reason) using an interactive modal.
+* **Delete:** Cancel or remove appointments if needed.
+
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+| Tech | Purpose |
+| --- | --- |
+| Next.js 15 (App Router) | Framework |
+| Tailwind CSS | Styling |
+| Better Auth | Authentication |
+| HeroUI | UI Components |
+| React Hook Form | Form handling |
+| React Hot Toast, Sonner | User notifications |
+
+### Backend
+
+| Tech | Purpose |
+| --- | --- |
+| Node.js + Express | API Server |
+| MongoDB | Database |
+| JWT (`jose-cjs`) | Token Verification |
+| CORS | Security |
+
+
+## 🗃️ API Endpoints
+
+Base URL: https://docure-server.vercel.app/doctors
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| GET | `/doctors` | Get all doctors |
+| GET | `/doctors/:id` | Get single doctor details |
+| POST | `/bookings` | Create a new appointment |
+| GET | `/bookings/:userId` | Get all appointments for a user |
+| **PATCH** | `/bookings/:id` | **Update/Edit an existing appointment** |
+| **DELETE** | `/bookings/:id` | **Delete/Cancel an appointment** |
+
+> **Note:** All `POST`, `PATCH`, and `DELETE` requests are protected by a `verifyToken` middleware to ensure data privacy.
+
+
+## 🚀 Getting Started
+
+### 1. Clone & Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/your-username/docure.git
+cd docure
+npm install
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2. Run Locally
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+* **Start Backend:** Navigate to the backend folder and run `npm run server` (or `nodemon index.js`).
+* **Start Frontend:** Run `npm run dev` in the root folder.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🖥️ Pages Overview
 
-To learn more about Next.js, take a look at the following resources:
+* `/` → Home (Banner, Featured Doctors)
+* `/appointments` → View all doctors
+* `/dashboard/my-profile` → User profile & update settings
+* `/dashboard/my-appointments` → Manage (View, Edit, Delete) appointments
+* `/login` / `/register` → Authentication flow
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
